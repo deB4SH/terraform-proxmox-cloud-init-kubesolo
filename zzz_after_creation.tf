@@ -13,7 +13,7 @@ module "kube-config" {
 
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
-  command_unix = "ssh -o UserKnownHostsFile=/tmp/control_plane_known_host -o StrictHostKeyChecking=no ${var.vm_user}@${local_file.ctrl-ip[each.key].content} cat /tmp/admin.kubeconfig"
+  command_unix = "ssh -o UserKnownHostsFile=/tmp/known_host_${each.key} -o StrictHostKeyChecking=no ${var.vm_user}@${local_file.ctrl-ip[each.key].content} cat /tmp/admin.kubeconfig"
 }
 
 resource "local_file" "kube-config" {
