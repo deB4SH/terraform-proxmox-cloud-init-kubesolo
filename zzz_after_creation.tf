@@ -23,3 +23,12 @@ resource "local_file" "kube-config" {
   filename        = "output/config-${each.key}"
   file_permission = "0600"
 }
+
+module "cleanup" {
+  depends_on   = [local_file.kube-config]
+  for_each = {for each in var.vm: each.name => each}
+
+  source       = "Invicton-Labs/shell-resource/external"
+  version      = "0.4.1"
+  command_unix = "rm -f /tmp/known_host_${each.key}"
+}
