@@ -45,6 +45,7 @@ runcmd:
   # wait for file creation of kubeconfig
   - while [ ! -f /var/lib/kubesolo/pki/admin/admin.kubeconfig ]; do sleep 1; done
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
+  - chmod 777 /tmp/admin.kubeconfig
   # enable qemu-guest-agent and let terraform know the system is ready
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
