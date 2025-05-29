@@ -1,5 +1,5 @@
 #image from here: https://cloud.debian.org/images/cloud/bookworm/daily/20240412-1715/
-resource "proxmox_virtual_environment_download_file" "image_always_pull" {
+resource "proxmox_virtual_environment_download_file" "image" {
   for_each = { for each in var.os_images : each.name => each }
 
   node_name           = var.pve_default_node
