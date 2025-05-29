@@ -1,0 +1,47 @@
+#cloud-config
+
+users:
+  - name: ${user}
+    passwd: ${user_password}
+    groups: 
+      - sudo
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${user_pub_key}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+
+hostname: ${hostname}
+timezone: ${timezone}
+
+apt:
+  primary:
+    - arches: [amd64, arm64, i386, default]
+      uri: ${debian_primary_mirror}
+  security:
+    - arches: [default]
+      uri: ${debian_primary_security_mirror}
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - qemu-guest-agent
+  - net-tools
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gpg
+  - open-iscsi
+  - jq
+  - nfs-common
+  - cifs-utils
+
+runcmd:
+  - systemctl restart systemd-sysctl
+  - echo "127.0.0.1  ${hostname}" >> /etc/hosts
+  - localectl set-locale LANG=en_US.UTF-8
+  # install kubesolo via install script
+  - curl -sfL https://raw.githubusercontent.com/portainer/kubesolo/refs/heads/develop/install.sh | sh -
+  # enable qemu-guest-agent and let terraform know the system is ready
+  - systemctl enable qemu-guest-agent
+  - systemctl start qemu-guest-agent
