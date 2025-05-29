@@ -2,8 +2,8 @@ resource "local_file" "ctrl-ip" {
   depends_on   = [proxmox_virtual_environment_vm.vm-worker]
   for_each = {for each in var.vm: each.name => each}
 
-  content         = proxmox_virtual_environment_vm.vm-worker[element(each.name).name].ipv4_addresses[1][0]
-  filename        = "output/ctrl-ip-${each.name}.txt"
+  content         = proxmox_virtual_environment_vm.vm-worker[each.key].ipv4_addresses[1][0]
+  filename        = "output/ctrl-ip-${each.key}.txt"
   file_permission = "0644"
 }
 
