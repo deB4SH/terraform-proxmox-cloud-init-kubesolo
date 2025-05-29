@@ -1,0 +1,26 @@
+resource "local_file" "ctrl-ip" {
+  depends_on   = [proxmox_virtual_environment_vm.vm-worker]
+  for_each = {for each in var.vm: each.name => each}
+
+  content         = proxmox_virtual_environment_vm.vm-worker[element(each.name).name].ipv4_addresses[1][0]
+  filename        = "output/ctrl-ip-${each.name}.txt"
+  file_permission = "0644"
+}
+
+module "kube-config" {
+  depends_on   = [proxmox_virtual_environment_vm.vm-worker]
+  for_each = {for each in var.vm: each.name => each}
+
+  source       = "Invicton-Labs/shell-resource/external"
+  version      = "0.4.1"
+  command_unix = "ssh -o UserKnownHostsFile=/tmp/control_plane_known_host -o StrictHostKeyChecking=no ${var.vm_user}@${local_file.ctrl-ip[each.name].content} cat /var/lib/kubesolo/pki/admin/admin.kubeconfig "
+}
+
+resource "local_file" "kube-config" {
+  depends_on = [ kube-config ]  
+  for_each = {for each in var.vm: each.name => each}
+
+  content         = module.kube-config[each.name].stdout
+  filename        = "output/config"
+  file_permission = "0600"
+}
