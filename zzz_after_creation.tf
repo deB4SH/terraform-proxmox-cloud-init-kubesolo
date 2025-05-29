@@ -17,7 +17,7 @@ module "kube-config" {
 }
 
 resource "local_file" "kube-config" {
-  depends_on = [ kube-config ]  
+  depends_on = [ kube-config.stdout ]  
   for_each = {for each in var.vm: each.name => each}
 
   content         = module.kube-config[each.key].stdout
