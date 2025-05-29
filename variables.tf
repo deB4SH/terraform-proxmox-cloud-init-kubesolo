@@ -88,16 +88,16 @@ variable "os_images" {
   }))
   default = [{
     name               = "amd64"
-    filename           = "kubesolodebian-12-generic-amd64-20250528-2126.qcow2.img"
+    filename           = "kubesolo-debian-12-generic-amd64-20250528-2126.qcow2.img"
     url                = "https://cloud.debian.org/images/cloud/bookworm/20250528-2126/debian-12-generic-amd64-20250528-2126.qcow2"
-    checksum           = "75db35c328863c6c84cb48c1fe1d7975407af637b272cfb8c87ac0cc0e7e89c8a1cc840c2d6d82794b53051a1131d233091c4f4d5790557a8540f0dc9fc4f631"
+    checksum           = "790b29c10c54c926c2aaef2583f5cc9b356d0c0fb6e9884c3f33fec78b1612407c920718a827da8f65a22065479764c41812d545bae8a4ece6a49a2e8ed746ce"
     checksum_algorithm = "sha512"
     },
     {
       name               = "arm64"
       filename           = "kubesolo-debian-12-generic-arm64-20250528-2126.qcow2.img"
       url                = "https://cloud.debian.org/images/cloud/bookworm/20250528-2126/debian-12-generic-arm64-20250528-2126.qcow2"
-      checksum           = "edab065c95a5b7e117327739f7c9326ea72e3307f16d62d3a214347ab7b86c9d44e430169d7835fd4ec07f93ef54fa5c1654418d2ee1f305384f03186bdd0010"
+      checksum           = "29a4aaa372f921ee77bd163359c4c321ef593f43ca524a2536e93c686a0feeb61b9c5f720d11c27c3aa4473e19b3a1d53112ee9a1395e82f8a0e35f73acda289"
       checksum_algorithm = "sha512"
     }
   ]
