@@ -13,14 +13,14 @@ module "kube-config" {
 
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
-  command_unix = "ssh -o UserKnownHostsFile=/tmp/control_plane_known_host -o StrictHostKeyChecking=no ${var.vm_user}@${local_file.ctrl-ip[each.name].content} cat /var/lib/kubesolo/pki/admin/admin.kubeconfig "
+  command_unix = "ssh -o UserKnownHostsFile=/tmp/control_plane_known_host -o StrictHostKeyChecking=no ${var.vm_user}@${local_file.ctrl-ip[each.key].content} cat /var/lib/kubesolo/pki/admin/admin.kubeconfig "
 }
 
 resource "local_file" "kube-config" {
   depends_on = [ kube-config ]  
   for_each = {for each in var.vm: each.name => each}
 
-  content         = module.kube-config[each.name].stdout
-  filename        = "output/config"
+  content         = module.kube-config[each.key].stdout
+  filename        = "output/config-${each.key}"
   file_permission = "0600"
 }
