@@ -41,7 +41,7 @@ runcmd:
   - echo "127.0.0.1  ${hostname}" >> /etc/hosts
   - localectl set-locale LANG=en_US.UTF-8
   # install kubesolo via install script
-  - curl -sfL https://raw.githubusercontent.com/portainer/kubesolo/refs/heads/develop/install.sh | sh -
+  - curl -sfL https://get.kubesolo.io | sudo sh -
   # enable qemu-guest-agent and let terraform know the system is ready
   - systemctl enable qemu-guest-agent
   - systemctl start qemu-guest-agent
