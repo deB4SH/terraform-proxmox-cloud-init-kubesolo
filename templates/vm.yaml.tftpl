@@ -13,23 +13,8 @@ users:
 hostname: ${hostname}
 timezone: ${timezone}
 
-package_update: true
-package_upgrade: true
-
-packages:
-  - qemu-guest-agent
-  - net-tools
-  - ca-certificates
-  - curl
-  - gpg
-  - open-iscsi
-  - jq
-  - nfs-utils
-  - cifs-utils
-
 runcmd:
-  - systemctl restart systemd-sysctl
-  - echo "127.0.0.1  ${hostname}" >> /etc/hosts
+  - apk add net-tools curl gpg jq nfs-utils cifs-utils
   - localectl set-locale LANG=en_US.UTF-8
   # install kubesolo via install script
   - curl -sfL https://get.kubesolo.io | sudo sh -
@@ -38,5 +23,5 @@ runcmd:
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
   - chmod 777 /tmp/admin.kubeconfig
   # enable qemu-guest-agent and let terraform know the system is ready
-  - systemctl enable qemu-guest-agent
-  - systemctl start qemu-guest-agent
+  - apk add qemu-guest-agent
+  - rc-update add qemu-guest-agent
