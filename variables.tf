@@ -88,16 +88,16 @@ variable "os_images" {
   }))
   default = [{
     name               = "amd64"
-    filename           = "kubesolo-debian-12-generic-amd64-20250528-2126.qcow2.img"
-    url                = "https://cloud.debian.org/images/cloud/bookworm/20250528-2126/debian-12-generic-amd64-20250528-2126.qcow2"
-    checksum           = "790b29c10c54c926c2aaef2583f5cc9b356d0c0fb6e9884c3f33fec78b1612407c920718a827da8f65a22065479764c41812d545bae8a4ece6a49a2e8ed746ce"
+    filename           = "generic_alpine-3.22.0-x86_64-bios-cloudinit-r0.img"
+    url                = "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/generic_alpine-3.22.0-x86_64-bios-cloudinit-r0.qcow2"
+    checksum           = "c99ce477ce7ea6a7f03cbaa3c9f349311b7613e2309d56df3454538c337a955ca596181801b230b108b1e1eb6f06985ac33e64fc1d5895b484e387be3893e8a6"
     checksum_algorithm = "sha512"
     },
     {
       name               = "arm64"
-      filename           = "kubesolo-debian-12-generic-arm64-20250528-2126.qcow2.img"
-      url                = "https://cloud.debian.org/images/cloud/bookworm/20250528-2126/debian-12-generic-arm64-20250528-2126.qcow2"
-      checksum           = "29a4aaa372f921ee77bd163359c4c321ef593f43ca524a2536e93c686a0feeb61b9c5f720d11c27c3aa4473e19b3a1d53112ee9a1395e82f8a0e35f73acda289"
+      filename           = "generic_alpine-3.22.0-aarch64-uefi-cloudinit-r0.qcow2.img"
+      url                = "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/generic_alpine-3.22.0-aarch64-uefi-cloudinit-r0.qcow2"
+      checksum           = "11c74ac1870e8b4f7611572a2ba87366de7fd99b0e39a2555e6dc9ebc164c5619093bcd2a56ba9080c79695be851f2b159c41f4beb26382bb6fafd0750b646ab"
       checksum_algorithm = "sha512"
     }
   ]
