@@ -88,9 +88,9 @@ variable "os_images" {
   }))
   default = [{
     name               = "amd64"
-    filename           = "generic_alpine-3.22.0-x86_64-bios-cloudinit-r0.img"
-    url                = "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/generic_alpine-3.22.0-x86_64-bios-cloudinit-r0.qcow2"
-    checksum           = "c99ce477ce7ea6a7f03cbaa3c9f349311b7613e2309d56df3454538c337a955ca596181801b230b108b1e1eb6f06985ac33e64fc1d5895b484e387be3893e8a6"
+    filename           = "generic_alpine-3.22.0-x86_64-uefi-cloudinit-r0.img"
+    url                = "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/cloud/generic_alpine-3.22.0-x86_64-uefi-cloudinit-r0.qcow2"
+    checksum           = "0f9626a2388450fc957ecca55b655dc7d2605d723ba3d64dc2ae1d5d8efefcdbf5e056ebb88861e3a563dd9d4036566df081955d37e68072569022d831b56481"
     checksum_algorithm = "sha512"
     },
     {
