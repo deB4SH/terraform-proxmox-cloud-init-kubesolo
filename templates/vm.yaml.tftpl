@@ -13,27 +13,18 @@ users:
 hostname: ${hostname}
 timezone: ${timezone}
 
-apt:
-  primary:
-    - arches: [amd64, arm64, i386, default]
-      uri: ${debian_primary_mirror}
-  security:
-    - arches: [default]
-      uri: ${debian_primary_security_mirror}
-
 package_update: true
 package_upgrade: true
 
 packages:
   - qemu-guest-agent
   - net-tools
-  - apt-transport-https
   - ca-certificates
   - curl
   - gpg
   - open-iscsi
   - jq
-  - nfs-common
+  - nfs-utils
   - cifs-utils
 
 runcmd:
