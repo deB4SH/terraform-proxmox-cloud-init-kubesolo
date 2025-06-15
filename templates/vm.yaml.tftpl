@@ -8,6 +8,15 @@ users:
     ssh_authorized_keys:
       - ${user_pub_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
+  # only enable when debugging
+  - name: debugger
+    primary_group: debugger
+    groups: 
+      - users
+      - sudo
+    #mkpasswd --method=SHA-512 --rounds=4096
+    #pw: supersecret
+    passwd: $6$rounds=4096$LcgL4UF0987sWbiu$b95suVi/Lvc9aIy1/ig3HURb5P5YqKAlqHjZDL1eDoAs/AdG6JIV1jn5ZcwAp.TGR9qiKbBtgbFE4pcK9.TOe0
 
 write_files:
   - path: /etc/apk/repositories
@@ -38,7 +47,7 @@ resolv_conf:
 runcmd:
   - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent
   # install kubesolo via install script
-  - curl -sfL https://get.kubesolo.io | sudo sh -
+  - curl -sfL https://get.kubesolo.io | sh -
   # wait for file creation of kubeconfig
   - while [ ! -f /var/lib/kubesolo/pki/admin/admin.kubeconfig ]; do sleep 1; done
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
