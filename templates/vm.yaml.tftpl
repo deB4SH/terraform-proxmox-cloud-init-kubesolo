@@ -46,7 +46,6 @@ timezone: ${timezone}
 #package_reboot_if_required: true
 
 runcmd:
-  - cat /etc/resolv.conf
   - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables
   # install kubesolo via install script
   - curl -sfL https://get.kubesolo.io | sh -
