@@ -1,15 +1,13 @@
 #cloud-config
 ssh_pwauth: yes
 
-users:
-  - name: ${user}
-    passwd: ${user_password}
-    groups: 
-      - sudo
-    shell: /bin/sh
-    ssh_authorized_keys:
+user: ${user}
+password: ${user_password}
+ssh_authorized_keys:
       - ${user_pub_key}
-    sudo: ALL=(ALL) NOPASSWD:ALL
+
+users:
+  - default
 
 write_files:
   - path: /etc/apk/repositories
@@ -39,7 +37,9 @@ timezone: ${timezone}
 #package_reboot_if_required: true
 
 runcmd:
-  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables kubectl bash
+  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables kubectl bash doas
+  - echo 'permit :wheel' > /etc/doas.d/doas.conf
+  - adduser ${user} wheel
   # install kubesolo via install script
   - mkdir /tmp/kubesolo
   - curl -sfL https://get.kubesolo.io --output /tmp/kubesolo/init.sh 
