@@ -48,7 +48,10 @@ timezone: ${timezone}
 runcmd:
   - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables
   # install kubesolo via install script
-  - curl -sfL https://get.kubesolo.io | sh -
+  - mkdir /tmp/kubesolo
+  - curl -sfL https://get.kubesolo.io --output /tmp/kubesolo/init.sh 
+  - chmod +x /tmp/kubesolo/init.sh 
+  - HOME=/tmp/kubesolo /tmp/kubesolo/init.sh 
   # wait for file creation of kubeconfig
   - while [ ! -f /var/lib/kubesolo/pki/admin/admin.kubeconfig ]; do sleep 1; done
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
