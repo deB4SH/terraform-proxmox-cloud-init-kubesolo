@@ -37,7 +37,7 @@ timezone: ${timezone}
 #package_reboot_if_required: true
 
 runcmd:
-  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables
+  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables kubectl
   # install kubesolo via install script
   - mkdir /tmp/kubesolo
   - curl -sfL https://get.kubesolo.io --output /tmp/kubesolo/init.sh 
