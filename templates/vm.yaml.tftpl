@@ -1,5 +1,4 @@
 #cloud-config
-
 users:
   - name: ${user}
     passwd: ${user_password}
@@ -10,12 +9,30 @@ users:
       - ${user_pub_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
 
+write_files:
+  - path: /etc/apk/repositories
+    content: |
+      #https://dl-cdn.alpinelinux.org/alpine/v3.19/testing
+      http://dl-cdn.alpinelinux.org/alpine/edge/community
+      http://dl-cdn.alpinelinux.org/alpine/edge/testing
+    append: true
+  - path: /etc/sysctl.conf
+    content: |
+      net.bridge.bridge-nf-call-iptables=1
+      net.ipv4.ip_forward=1
+  - path: /etc/modules-load.d/k8s.conf
+    content: |
+      br_netfilter
+
 hostname: ${hostname}
 timezone: ${timezone}
 
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
 runcmd:
-  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils
-  - localectl set-locale LANG=en_US.UTF-8
+  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent
   # install kubesolo via install script
   - curl -sfL https://get.kubesolo.io | sudo sh -
   # wait for file creation of kubeconfig
@@ -23,5 +40,4 @@ runcmd:
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
   - chmod 777 /tmp/admin.kubeconfig
   # enable qemu-guest-agent and let terraform know the system is ready
-  - apk add qemu-guest-agent
   - rc-update add qemu-guest-agent
