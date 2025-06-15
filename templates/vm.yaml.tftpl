@@ -8,15 +8,6 @@ users:
     ssh_authorized_keys:
       - ${user_pub_key}
     sudo: ALL=(ALL) NOPASSWD:ALL
-  # only enable when debugging
-  - name: debugger
-    primary_group: debugger
-    groups: 
-      - users
-      - sudo
-    #mkpasswd --method=SHA-512 --rounds=4096
-    #pw: supersecret
-    passwd: $6$rounds=4096$LcgL4UF0987sWbiu$b95suVi/Lvc9aIy1/ig3HURb5P5YqKAlqHjZDL1eDoAs/AdG6JIV1jn5ZcwAp.TGR9qiKbBtgbFE4pcK9.TOe0
 
 write_files:
   - path: /etc/apk/repositories
@@ -52,8 +43,6 @@ runcmd:
   - curl -sfL https://get.kubesolo.io --output /tmp/kubesolo/init.sh 
   - chmod +x /tmp/kubesolo/init.sh 
   - HOME=/tmp/kubesolo /tmp/kubesolo/init.sh 
-  # wait for file creation of kubeconfig
-  - while [ ! -f /var/lib/kubesolo/pki/admin/admin.kubeconfig ]; do sleep 1; done
   - cp /var/lib/kubesolo/pki/admin/admin.kubeconfig /tmp/admin.kubeconfig
   - chmod 777 /tmp/admin.kubeconfig
   # enable qemu-guest-agent and let terraform know the system is ready
