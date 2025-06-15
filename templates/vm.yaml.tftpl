@@ -1,13 +1,13 @@
 #cloud-config
-users:
-  - name: ${user}
-    passwd: ${user_password}
-    groups: 
-      - sudo
-    shell: /bin/bash
-    ssh_authorized_keys:
+ssh_pwauth: yes
+
+user: ${user}
+password: ${user_password}
+ssh_authorized_keys:
       - ${user_pub_key}
-    sudo: ALL=(ALL) NOPASSWD:ALL
+
+users:
+  - default
 
 write_files:
   - path: /etc/apk/repositories
