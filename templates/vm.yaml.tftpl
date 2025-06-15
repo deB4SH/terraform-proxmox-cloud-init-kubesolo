@@ -32,6 +32,11 @@ write_files:
   - path: /etc/modules-load.d/k8s.conf
     content: |
       br_netfilter
+  - path: /etc/resolv.conf
+    content: |
+      nameserver ${dns_server}
+      search ${dns_domain}
+
 
 hostname: ${hostname}
 timezone: ${timezone}
@@ -40,11 +45,8 @@ timezone: ${timezone}
 #package_upgrade: true
 #package_reboot_if_required: true
 
-resolv_conf:
-  nameservers: ['${dns_server}']
-  domain: ${dns_domain}
-
 runcmd:
+  - cat /etc/resolv.conf
   - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent
   # install kubesolo via install script
   - curl -sfL https://get.kubesolo.io | sh -
