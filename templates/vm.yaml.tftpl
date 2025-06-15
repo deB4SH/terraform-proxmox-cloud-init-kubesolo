@@ -14,7 +14,7 @@ hostname: ${hostname}
 timezone: ${timezone}
 
 runcmd:
-  - apk add net-tools curl gpg jq nfs-utils cifs-utils
+  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils
   - localectl set-locale LANG=en_US.UTF-8
   # install kubesolo via install script
   - curl -sfL https://get.kubesolo.io | sudo sh -
