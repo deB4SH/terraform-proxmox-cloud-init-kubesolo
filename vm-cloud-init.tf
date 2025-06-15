@@ -19,6 +19,9 @@ resource "proxmox_virtual_environment_file" "cloud-init-kubesolo" {
       debian_primary_security_mirror = var.debian_primary_security_mirror
       #kubernetes related
       ip                          = element(split("/", each.value.ip), 0)
+      dns_server = var.dns_configuration.servers
+      dns_domain = var.dns_configuration.domain
+
     })
     file_name = format("%s-%s.yaml", "${var.vm_worker_startid + each.value.id_offset}", each.value.name)
   }

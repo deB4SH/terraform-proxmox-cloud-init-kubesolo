@@ -27,9 +27,13 @@ write_files:
 hostname: ${hostname}
 timezone: ${timezone}
 
-package_update: true
-package_upgrade: true
-package_reboot_if_required: true
+#package_update: true
+#package_upgrade: true
+#package_reboot_if_required: true
+
+resolv_conf:
+  nameservers: ['${dns_server}']
+  domain: ${dns_domain}
 
 runcmd:
   - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent
