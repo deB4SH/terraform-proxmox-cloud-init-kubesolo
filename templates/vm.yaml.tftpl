@@ -37,7 +37,7 @@ timezone: ${timezone}
 #package_reboot_if_required: true
 
 runcmd:
-  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables kubectl bash doas
+  - apk add --no-cache net-tools curl gpg jq nfs-utils cifs-utils qemu-guest-agent iptables kubectl bash doas sudo tar musl
   - echo 'permit :wheel' > /etc/doas.d/doas.conf
   - adduser ${user} wheel
   # install kubesolo via install script
